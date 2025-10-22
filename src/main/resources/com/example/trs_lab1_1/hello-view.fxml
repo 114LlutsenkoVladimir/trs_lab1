@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="255.0" prefWidth="257.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trs_lab1_1.HelloController">
+   <children>
+      <Button fx:id="calcButton" layoutX="80.0" layoutY="169.0" mnemonicParsing="false" onAction="#calculateIntegral" text="calc" />
+      <TextField fx:id="startRangeField" layoutX="80.0" layoutY="24.0" />
+      <TextField fx:id="endRangeField" layoutX="80.0" layoutY="61.0" />
+      <TextField fx:id="stepsField" layoutX="80.0" layoutY="95.0" />
+      <Label layoutX="81.0" layoutY="203.0" text="Result: " />
+      <Label layoutX="80.0" layoutY="220.0" text="Time:" />
+      <Label layoutX="47.0" layoutY="28.0" text="start:" />
+      <Label layoutX="47.0" layoutY="65.0" text="end:" />
+      <Label layoutX="47.0" layoutY="99.0" text="steps:" />
+      <Label fx:id="resultLabel" layoutX="129.0" layoutY="203.0" prefHeight="17.0" prefWidth="89.0" />
+      <Label fx:id="timeLabel" layoutX="129.0" layoutY="220.0" prefHeight="17.0" prefWidth="89.0" />
+      <TextField fx:id="threadsField" layoutX="80.0" layoutY="130.0" />
+      <Label layoutX="34.0" layoutY="134.0" text="threads:" />
+   </children>
+</AnchorPane>
