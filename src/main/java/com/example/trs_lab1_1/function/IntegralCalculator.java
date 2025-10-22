@@ -28,19 +28,18 @@ public class IntegralCalculator {
         return h/3 * (0.5 * f.calculate(a) + sum1 + 2 * sum2 + 0.5 * f.calculate(a + n * h));
     }
 
-    public double calculateIntegralThreads(double a, double b, int n, Function f)
+    public double calculateIntegralThreads(double a, double b, int n, Function f, int threads)
             throws ExecutionException, InterruptedException {
 
         double h = (b - a) / n;
 
-        int cores = Runtime.getRuntime().availableProcessors();
-        ExecutorService pool = Executors.newFixedThreadPool(cores);
+        ExecutorService pool = Executors.newFixedThreadPool(threads);
 
         List<Future<Double>> futuresSum1 = new ArrayList<>();
         List<Future<Double>> futuresSum2 = new ArrayList<>();
 
-        List<int[]> ranges1 = splitInclusive(1, n - 1, cores);
-        List<int[]> ranges2 = splitInclusive(1, n, cores);
+        List<int[]> ranges1 = splitInclusive(1, n - 1, threads);
+        List<int[]> ranges2 = splitInclusive(1, n, threads);
 
         for (int[] rg : ranges1)
             futuresSum1.add(pool.submit(new Sum1Task(rg[0], rg[1], h, a, f)));

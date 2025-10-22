@@ -21,6 +21,8 @@ public class HelloController {
     private TextField endRangeField;
     @FXML
     private TextField stepsField;
+    @FXML
+    private TextField threadsField;
 
     private IntegralCalculator calculator = new IntegralCalculator();
 
@@ -31,9 +33,10 @@ public class HelloController {
             double startRange = Double.parseDouble(startRangeField.getText());
             double endRange = Double.parseDouble(endRangeField.getText());
             int steps = Integer.parseInt(stepsField.getText());
+            int threads = Integer.parseInt(threadsField.getText());
 
             long startTime = System.nanoTime();
-            double result = calculator.calculateIntegralThreads(startRange, endRange, steps, new FunctionV6());
+            double result = calculator.calculateIntegralThreads(startRange, endRange, steps, new FunctionV6(), threads);
             long endTime = System.nanoTime();
             double duration = (endTime - startTime) / 1_000_000_000.0;
 
@@ -52,10 +55,13 @@ public class HelloController {
             double startRange = Double.parseDouble(startRangeField.getText());
             double endRange = Double.parseDouble(endRangeField.getText());
             int steps = Integer.parseInt(stepsField.getText());
+            int threads = Integer.parseInt(threadsField.getText());
             if (startRange > endRange)
                 throw new RuntimeException("початок не може бути більше кінця");
             if (steps <= 0)
                 throw new RuntimeException("кіль-ть кроків має бути додатньою");
+            if (threads <= 0)
+                throw new RuntimeException("кіль-ть потоків має бути додатньою");
         } catch (NumberFormatException e) {
             throw new RuntimeException("некоретний ввід");
         }
