@@ -17,7 +17,7 @@ public class IntegralCalculatorTest {
         double a = 2.0, b = 5.0;
         int n = 10_000;
         double expected = b - a;
-        double actual = calc.calculateIntegralThreads(a, b, n, f);
+        double actual = calc.calculateIntegralThreads(a, b, n, f, 8);
         assertEquals(expected, actual, 1e-10);
     }
 
@@ -29,7 +29,7 @@ public class IntegralCalculatorTest {
         double a = 0.0, b = 1.0;
         int n = 10_000;
         double expected = 0.5;
-        double actual = calc.calculateIntegralThreads(a, b, n, f);
+        double actual = calc.calculateIntegralThreads(a, b, n, f, 8);
         assertEquals(expected, actual, 1e-8);
     }
 
@@ -41,7 +41,7 @@ public class IntegralCalculatorTest {
         double a = 0.0, b = 1.0;
         int n = 10_000;
         double expected = 1.0 / 3.0;
-        double actual = calc.calculateIntegralThreads(a, b, n, f);
+        double actual = calc.calculateIntegralThreads(a, b, n, f, 8);
         assertEquals(expected, actual, 1e-7);
     }
 
@@ -53,7 +53,7 @@ public class IntegralCalculatorTest {
         double a = 0.0, b = Math.PI;
         int n = 20_000;
         double expected = 2.0;
-        double actual = calc.calculateIntegralThreads(a, b, n, f);
+        double actual = calc.calculateIntegralThreads(a, b, n, f, 8);
         assertEquals(expected, actual, 1e-6);
     }
 
@@ -65,7 +65,7 @@ public class IntegralCalculatorTest {
         double a = 0.0, b = Math.PI / 2;
         int n = 20_000;
         double expected = 1.0;
-        double actual = calc.calculateIntegralThreads(a, b, n, f);
+        double actual = calc.calculateIntegralThreads(a, b, n, f, 8);
         assertEquals(expected, actual, 1e-6);
     }
 
@@ -77,7 +77,7 @@ public class IntegralCalculatorTest {
         double a = 0.0, b = 1.0;
         int n = 20_000;
         double expected = Math.E - 1.0;
-        double actual = calc.calculateIntegralThreads(a, b, n, f);
+        double actual = calc.calculateIntegralThreads(a, b, n, f, 8);
         assertEquals(expected, actual, 1e-6);
     }
 
@@ -89,7 +89,7 @@ public class IntegralCalculatorTest {
         double a = 0.0, b = 1.0;
         int n = 20_000;
         double expected = Math.PI / 4.0;
-        double actual = calc.calculateIntegralThreads(a, b, n, f);
+        double actual = calc.calculateIntegralThreads(a, b, n, f, 8);
         assertEquals(expected, actual, 1e-6);
     }
 }
