@@ -2,10 +2,8 @@ package com.example.trs_lab1_1.function;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+
+
 
 public class IntegralCalculator {
     public double calculateIntegral(double a, double b, int n, Function f) {
@@ -29,33 +27,30 @@ public class IntegralCalculator {
     }
 
     public double calculateIntegralThreads(double a, double b, int n, Function f, int threads)
-            throws ExecutionException, InterruptedException {
+            throws InterruptedException {
 
         double h = (b - a) / n;
 
-        ExecutorService pool = Executors.newFixedThreadPool(threads);
-
-        List<Future<Double>> futuresSum1 = new ArrayList<>();
-        List<Future<Double>> futuresSum2 = new ArrayList<>();
+        List<Sum1Task> sum1RunnableObjects = new ArrayList<>();
+        List<Sum2Task> sum2RunnableObjects = new ArrayList<>();
 
         List<int[]> ranges1 = splitInclusive(1, n - 1, threads);
         List<int[]> ranges2 = splitInclusive(1, n, threads);
 
-        for (int[] rg : ranges1)
-            futuresSum1.add(pool.submit(new Sum1Task(rg[0], rg[1], h, a, f)));
+        ranges1.forEach(r -> sum1RunnableObjects.add(new Sum1Task(r[0], r[1], h, a, f)));
+        ranges2.forEach(r -> sum2RunnableObjects.add(new Sum2Task(r[0], r[1], h, a, f)));
 
-        for (int[] rg : ranges2)
-            futuresSum2.add(pool.submit(new Sum2Task(rg[0], rg[1], h, a, f)));
+        List<Thread> sum1Threads = sum1RunnableObjects.stream().map(rn -> new Thread(rn)).toList();
+        List<Thread> sum2Threads = sum2RunnableObjects.stream().map(rn -> new Thread(rn)).toList();
 
-        double sum1 = 0.0;
-        for (Future<Double> fut : futuresSum1)
-            sum1 += fut.get();
+        sum1Threads.forEach(Thread::start);
+        sum2Threads.forEach(Thread::start);
 
-        double sum2 = 0.0;
-        for (Future<Double> fut : futuresSum2)
-            sum2 += fut.get();
+        for (Thread t : sum1Threads) t.join();
+        for (Thread t : sum2Threads) t.join();
 
-        pool.shutdown();
+        double sum1 = sum1RunnableObjects.stream().mapToDouble(Sum1Task::getResult).sum();
+        double sum2 = sum2RunnableObjects.stream().mapToDouble(Sum2Task::getResult).sum();
 
         double fa = f.calculate(a);
         double fb = f.calculate(a + n * h);

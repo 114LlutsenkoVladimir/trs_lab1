@@ -43,7 +43,7 @@ public class HelloController {
             resultLabel.setText(String.valueOf(result));
             timeLabel.setText(String.valueOf(duration));
 
-        } catch (RuntimeException | ExecutionException
+        } catch (RuntimeException
                  | InterruptedException e) {
             showAlert(e.getMessage());
         }
